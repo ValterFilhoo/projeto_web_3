@@ -9,11 +9,11 @@ import { FooterComponent } from '../../componentes/footer/footer.component';
 
 
 @Component({
-  selector: 'app-editar-postagem',
+  selector: 'app-nova-postagem',
   imports: [HeaderComponent, BarraNavegacaoComponent, CriarPostagemComponent, SubirImagemVideoComponent, FormularioPostagemComponent, FeedbackSucessoErroComponent, FooterComponent],
-  templateUrl: './editar-postagem.component.html',
-  styleUrl: './editar-postagem.component.css'
+  templateUrl: './nova-postagem.component.html',
+  styleUrl: './nova-postagem.component.css'
 })
-export class EditarPostagemComponent {
+export class NovaPostagemComponent {
 
 }
