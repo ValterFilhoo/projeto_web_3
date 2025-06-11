@@ -1,11 +1,19 @@
-.heightContainer {
-    height: 90vh;
+.heigthContainer {
+    height: 70vh;
+}
+
+.maxHeightContainerImg {
+    max-height: 600px;
 }
 
 .colorBackground {
-    background-color: #BAB7B7;
+    background-color: #D8D8D8;
 } 
 
 .containerContent {
     height: 50%;
+}
+
+.bgCard {
+    background-color: #BAB7B7;
 }
