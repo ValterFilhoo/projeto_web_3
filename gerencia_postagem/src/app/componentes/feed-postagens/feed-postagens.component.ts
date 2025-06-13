@@ -10,4 +10,6 @@ import { QtdComentariosComponent } from '../qtd-comentarios/qtd-comentarios.comp
 })
 export class FeedPostagensComponent {
 
+  nomeUsuario = "valter_filho";
+
 }
