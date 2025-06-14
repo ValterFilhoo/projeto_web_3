@@ -1,1 +1,35 @@
-<p>postagens-perfil works!</p>
+<section class="container mt-4">
+
+  <div class="row">
+
+    <article class="col-md-4 mb-4"  *ngFor="let post of postagens">
+
+      <div class="border rounded-2 p-3 h-100 d-flex flex-column justify-content-between">
+
+        <a [routerLink]="'/postagem/' + post.id" class="text-decoration-none text-dark">
+
+          <div class="d-flex flex-column justify-content-center">
+            <img [src]="post.imagem" alt="Imagem da postagem" class="img-fluid w-100 mb-3">
+          </div>
+          
+        </a>
+
+        <div class="mt-4 d-flex justify-content-center gap-3">
+
+          <button class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+
+          <button class="btn btn-outline-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Excluir
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>

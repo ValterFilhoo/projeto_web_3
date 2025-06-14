@@ -1,1 +1,19 @@
-<p>perfil-usuario works!</p>
+<div class="container mt-4">
+  <div class="card p-3 shadow-sm">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <i class="fa-solid fa-user-circle fa-4x text-secondary"></i>
+      </div>
+      <div class="col">
+        <h3 class="mb-1">{{ nomeUsuario }}</h3>
+        <p class="text-secondary">{{ bioUsuario }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h2 class="h2 text-center">Minhas Postagens</h2>
+    <app-postagens-perfil></app-postagens-perfil>
+  </div>
+  
+</div>

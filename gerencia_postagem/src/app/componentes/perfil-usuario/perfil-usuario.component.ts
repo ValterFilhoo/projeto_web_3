@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { PostagensPerfilComponent } from '../postagens-perfil/postagens-perfil.component';
 
 @Component({
   selector: 'app-perfil-usuario',
-  imports: [],
   templateUrl: './perfil-usuario.component.html',
-  styleUrl: './perfil-usuario.component.css'
+  styleUrls: ['./perfil-usuario.component.css'],
+  imports: [PostagensPerfilComponent]
 })
 export class PerfilUsuarioComponent {
-
+  nomeUsuario = "valter";
+  bioUsuario = "Biografia";
 }
