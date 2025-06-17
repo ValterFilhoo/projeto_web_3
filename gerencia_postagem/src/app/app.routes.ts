@@ -8,11 +8,11 @@ import { EditarPostagemComponent } from './pages/editar-postagem/editar-postagem
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 
 export const routes: Routes = [
-  { path: '', component: FeedComponent }, // o Feed será a página inicial.
-  { path: 'perfil', component: PerfilComponent }, // a rota para perfil.
+  { path: '', component: FeedComponent },
+  { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'cadastro', component: CadastroComponent }, // a rota para a pagina de cadastro.
-  { path: 'postagem', component: PostagemComponent }, // a rota para os detalhes de uma postagem.
+  { path: 'cadastro', component: CadastroComponent },
+  { path: 'postagem', component: PostagemComponent }, 
   { path: 'nova-postagem', component: NovaPostagemComponent }, 
   { path: 'editar-postagem', component: EditarPostagemComponent }
 ];

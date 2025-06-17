@@ -1,1 +1,79 @@
-<p>detalhes-postagem works!</p>
+<section class="container-fluid mt-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-10 col-lg-8">
+
+      <article class="border rounded-2 p-4 shadow-sm">
+
+        <div class="row mb-4">
+
+          <div class="col text-center">
+
+            <img [src]="imagem" alt="Imagem da postagem"
+            class="img-fluid rounded w-100 object-fit-cover" style="max-height: 450px;">
+          </div>
+
+        </div>
+
+        <section class="row mb-3">
+
+          <div class="col">
+            <p>{{ usuario }}: {{ legenda }}</p>
+          </div>
+
+        </section>
+
+        <div class="row mb-4">
+
+          <div class="col d-flex align-items-center justify-content-center gap-3">
+            <app-botao-curtida [curtidas]="5"></app-botao-curtida>
+            <app-qtd-comentarios [quantidade]="comentarios.length"></app-qtd-comentarios>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <h3 class="mb-3">Comentários</h3>
+
+            <div *ngIf="comentarios.length; else semComentarios">
+
+              <div *ngFor="let comentario of comentarios"
+                class="p-2 mb-3 d-flex align-items-center">
+                <strong class="me-1">{{ comentario.autor }}:</strong>
+                <p class="mb-0">{{ comentario.mensagem }}</p>
+              </div>
+
+            </div>
+
+            <ng-template #semComentarios>
+              <p class="text-muted fst-italic">Nenhum comentário encontrado.</p>
+            </ng-template>
+
+            <form class="mt-4">
+
+              <div class="mb-3">
+                <label for="novoComentario" class="form-label">Novo comentário</label>
+                <textarea id="novoComentario" class="form-control" rows="3"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-paper-plane me-1"></i> Comentar
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+  
+</section>
