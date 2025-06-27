@@ -1,1 +1,14 @@
-<p>criar-postagem works!</p>
+<app-subir-imagem-video (arquivo)="getArquivo($event)"></app-subir-imagem-video>
+
+<app-formulario-postagem
+  #formularioRef
+  (dadosFormPostagem)="getDados($event)">
+</app-formulario-postagem>
+
+<div class="d-flex justify-content-center mt-3">
+  <button class="btn btn-primary mt-3" (click)="publicarPostagem()">
+  Publicar Postagem
+  </button>
+</div>
+
+<app-feedback-sucesso-erro></app-feedback-sucesso-erro>
