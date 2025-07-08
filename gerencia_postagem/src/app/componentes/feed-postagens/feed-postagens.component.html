@@ -1,155 +1,46 @@
 <main class="w-75 m-auto colorBackground">
 
-    <section>
+  <section>
 
-        <div class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
-            
-            <div class="row d-flex align-items-center mt-3 mb-3">
+    <div *ngFor="let post of postagens" class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
 
-                <div class="col-1 d-flex justify-content-center">
-                    <i class="fa-solid fa-user fa-2x"></i>
-                </div>
+      <div class="row d-flex align-items-center mt-3 mb-3">
 
-                <div class="col-1 d-flex justify-content-center">
-                    <p class="mb-0">09:00</p>
-                </div>
-
-            </div>
-
-            <div class="row h-25">
-
-                <div class="container-fluid col-12 maxHeightContainerImg w-100">
-                    <img class="img-fluid h-100 w-100 object-fit-fill" src="assets/images/img_dog.png" alt="Imagem do cachorro">
-                </div>
-
-            </div>
-
-            <div class="row mt-3 mb-3">
-                
-                <div class="col-12 d-flex justify-content-between align-items-center gap-3">
-                    <app-botao-curtida [curtidas]="5"></app-botao-curtida>
-                    <app-qtd-comentarios [quantidade]="2"></app-qtd-comentarios>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <p class="fs-5">{{nomeUsuario}}: The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like real...</p>
-            </div>
-
+        <div class="col-1 d-flex justify-content-center">
+          <i class="fa-solid fa-user fa-2x"></i>
         </div>
 
-        <div class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
-            
-            <div class="row d-flex align-items-center mt-3 mb-3">
-
-                <div class="col-1 d-flex justify-content-center">
-                    <i class="fa-solid fa-user fa-2x"></i>
-                </div>
-
-                <div class="col-1 d-flex justify-content-center">
-                    <p class="mb-0">09:00</p>
-                </div>
-
-            </div>
-
-            <div class="row h-25">
-
-                <div class="container-fluid col-12 maxHeightContainerImg w-100">
-                    <img class="img-fluid h-100 w-100 object-fit-fill" src="assets/images/img_dog.png" alt="Imagem do cachorro">
-                </div>
-                
-            </div>
-
-            <div class="row mt-3 mb-3">
-                
-                <div class="col-12 d-flex justify-content-between align-items-center gap-3">
-                    <app-botao-curtida [curtidas]="10"></app-botao-curtida>
-                    <app-qtd-comentarios [quantidade]="2"></app-qtd-comentarios>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <p class="fs-5">{{nomeUsuario}}: The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like real...</p>
-            </div>
-
+        <div class="col-1 d-flex justify-content-center">
+          <p class="mb-0">{{ post.data_postagem | date:'HH:mm' }}</p>
         </div>
 
-        <div class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
-            
-            <div class="row d-flex align-items-center mt-3 mb-3">
+      </div>
 
-                <div class="col-1 d-flex justify-content-center">
-                    <i class="fa-solid fa-user fa-2x"></i>
-                </div>
+      <div class="row h-25">
+        <div class="container-fluid col-12 maxHeightContainerImg w-100">
+          <img 
+            class="img-fluid h-100 w-100 object-fit-fill"
+            [src]="'http://localhost:3000/' + post.caminho_arquivo"
+            [alt]="'Imagem de ' + post.nome_usuario"
+          />
+        </div>
+      </div>
 
-                <div class="col-1 d-flex justify-content-center">
-                    <p class="mb-0">09:00</p>
-                </div>
+      <div class="row mt-3 mb-3">
 
-            </div>
-
-            <div class="row h-25">
-
-                <div class="container-fluid col-12 maxHeightContainerImg w-100">
-                    <img class="img-fluid h-100 w-100 object-fit-fill" src="assets/images/img_dog.png" alt="Imagem do cachorro">
-                </div>
-                
-            </div>
-
-            <div class="row mt-3 mb-3">
-                
-                <div class="col-12 d-flex justify-content-between align-items-center gap-3">
-                    <app-botao-curtida [curtidas]="15"></app-botao-curtida>
-                    <app-qtd-comentarios [quantidade]="2"></app-qtd-comentarios>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <p class="fs-5">{{nomeUsuario}}: The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like real...</p>
-            </div>
-
+        <div class="col-12 d-flex justify-content-between align-items-center gap-3">
+          <app-botao-curtida [curtidas]="0"></app-botao-curtida>
+          <app-qtd-comentarios [quantidade]="0"></app-qtd-comentarios>
         </div>
 
-        <div class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
-            
-            <div class="row d-flex align-items-center mt-3 mb-3">
+      </div>
 
-                <div class="col-1 d-flex justify-content-center">
-                    <i class="fa-solid fa-user fa-2x"></i>
-                </div>
+      <div class="row">
+        <p class="fs-5">{{ post.nome_usuario }}: {{ post.legenda }}</p>
+      </div>
 
-                <div class="col-1 d-flex justify-content-center">
-                    <p class="mb-0">09:00</p>
-                </div>
+    </div>
 
-            </div>
-
-            <div class="row h-25">
-
-                <div class="container-fluid col-12 maxHeightContainerImg w-100">
-                    <img class="img-fluid h-100 w-100 object-fit-fill" src="assets/images/img_dog.png" alt="Imagem do cachorro">
-                </div>
-                
-            </div>
-
-            <div class="row mt-3 mb-3">
-                
-                <div class="col-12 d-flex justify-content-between align-items-center gap-3">
-                    <app-botao-curtida [curtidas]="20"></app-botao-curtida>
-                    <app-qtd-comentarios [quantidade]="2"></app-qtd-comentarios>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <p class="fs-5">{{nomeUsuario}}: The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like real...</p>
-            </div>
-
-        </div>
-
-    </section>
-
+  </section>
+  
 </main>

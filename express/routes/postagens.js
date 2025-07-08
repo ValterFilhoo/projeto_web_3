@@ -8,14 +8,20 @@ router.get('/', async (req, res) => {
 
   try {
 
-    const [resultado] = await db.query(`
-      SELECT postagens.id, usuarios.nome_usuario, postagens.caminho_arquivo, postagens.legenda, postagens.tipo_arquivo, postagens.data_postagem
-      FROM postagens, usuarios
-      WHERE postagens.usuario_id = usuarios.id
-      ORDER BY postagens.data_postagem DESC
-    `);
+    console.log('🔍 Executando query...');
 
-    res.json(resultado);
+const [resultado] = await db.query(`
+  SELECT postagens.id, usuarios.nome_usuario, postagens.caminho_arquivo, 
+         postagens.legenda, postagens.tipo_arquivo, postagens.data_postagem
+  FROM postagens, usuarios
+  WHERE postagens.usuario_id = usuarios.id
+  ORDER BY postagens.data_postagem DESC
+`);
+
+console.log('✅ Resultado da query:', resultado);
+res.json(resultado);
+
+
 
   } catch (erro) {
     res.status(500).json({ erro: 'Erro ao buscar postagens', detalhe: erro.message });
