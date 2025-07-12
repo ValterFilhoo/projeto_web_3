@@ -22,18 +22,17 @@ export class FormularioPostagemComponent {
   });
 
   enviarFormulario() {
-    
-    if(this.formulario.valid) {
+  this.formulario.markAllAsTouched(); 
 
-      console.log(`Dados submetidos: ${this.formulario.value.idUsuario}, ${this.formulario.value.legendaPostagem}`)
-
-      this.dadosFormPostagem.emit({
-        id: Number(this.formulario.value.idUsuario),
-        legenda: this.formulario.value.legendaPostagem ?? ''
-      });
-
-    }
-
+  if (this.formulario.valid) {
+    console.log(`Dados submetidos: ${this.formulario.value.idUsuario}, ${this.formulario.value.legendaPostagem}`);
+    this.dadosFormPostagem.emit({
+      id: Number(this.formulario.value.idUsuario),
+      legenda: this.formulario.value.legendaPostagem ?? ''
+    });
+  } else {
+    console.log('Formulário inválido. Corrija os campos antes de enviar.');
   }
+}
 
 }

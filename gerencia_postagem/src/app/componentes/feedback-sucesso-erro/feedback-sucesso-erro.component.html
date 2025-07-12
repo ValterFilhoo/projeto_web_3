@@ -1,1 +1,18 @@
-<p>Farei em breve</p>
+<div
+  class="alert d-flex align-items-center justify-content-center mt-4"
+  [ngClass]="{
+    'alert-success': tipo === 'sucesso',
+    'alert-danger': tipo === 'erro'
+  }"
+  role="alert"
+>
+  <i
+    class="me-2"
+    [ngClass]="{
+      'fas fa-check-circle': tipo === 'sucesso',
+      'fas fa-exclamation-triangle': tipo === 'erro'
+    }"
+  ></i>
+
+  <span class="fw-semibold">{{ mensagem }}</span>
+</div>

@@ -11,4 +11,8 @@
   </button>
 </div>
 
-<app-feedback-sucesso-erro></app-feedback-sucesso-erro>
+<app-feedback-sucesso-erro
+  *ngIf="mostrarToast"
+  [tipo]="sucesso ? 'sucesso' : 'erro'"
+  [mensagem]="mensagemFeedback">
+</app-feedback-sucesso-erro>

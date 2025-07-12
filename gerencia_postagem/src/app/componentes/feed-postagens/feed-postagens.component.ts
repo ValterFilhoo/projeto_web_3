@@ -3,34 +3,33 @@ import { BotaoCurtidaComponent } from '../botao-curtida/botao-curtida.component'
 import { QtdComentariosComponent } from '../qtd-comentarios/qtd-comentarios.component';
 import { PostagemService } from '../../services/postagens.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Postagem } from '../../interfaces/postagem.interface';
 
 @Component({
   selector: 'app-feed-postagens',
-  imports: [BotaoCurtidaComponent, QtdComentariosComponent, CommonModule],
+  imports: [BotaoCurtidaComponent, QtdComentariosComponent, CommonModule, RouterModule],
   templateUrl: './feed-postagens.component.html',
   styleUrl: './feed-postagens.component.css'
 })
 export class FeedPostagensComponent implements OnInit {
 
-  nomeUsuario = 'valter_filho';
-  postagens: any[] = [];
+  postagens: Postagem[] = [];
 
   constructor(private postagemServicos: PostagemService) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.carregarPostagens();
+  ngOnInit(): void {
+    this.carregarPostagens();
   };
 
-  async carregarPostagens(): Promise<void> {
+  private async carregarPostagens(): Promise<void> {
 
     try {
-
       const resposta = await this.postagemServicos.getPostagens();
       this.postagens = resposta;
       console.log('Resultado da requisição:', resposta);
-      
     } catch (erro) {
-      console.log(`Erro na requisição: ${erro}`);
+      console.error('Erro na requisição:', erro);
     };
 
   };

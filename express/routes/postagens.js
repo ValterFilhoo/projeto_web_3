@@ -3,40 +3,69 @@ const router = express.Router();
 const db = require('../config/db');
 const path = require('path');
 
-// Listar todas as postagens
 router.get('/', async (req, res) => {
 
   try {
 
-    console.log('🔍 Executando query...');
+    console.log('Executando query...');
 
-const [resultado] = await db.query(`
-  SELECT postagens.id, usuarios.nome_usuario, postagens.caminho_arquivo, 
-         postagens.legenda, postagens.tipo_arquivo, postagens.data_postagem
-  FROM postagens, usuarios
-  WHERE postagens.usuario_id = usuarios.id
-  ORDER BY postagens.data_postagem DESC
-`);
+    const [resultado] = await db.query(`
+      SELECT postagens.id, usuarios.nome_usuario, postagens.caminho_arquivo, 
+            postagens.legenda, postagens.tipo_arquivo, postagens.data_postagem
+      FROM postagens, usuarios
+      WHERE postagens.usuario_id = usuarios.id
+      ORDER BY postagens.data_postagem DESC
+    `);
 
-console.log('✅ Resultado da query:', resultado);
-res.json(resultado);
+    console.log('Resultado da query:', resultado);
+    res.json(resultado);
 
+    } catch (erro) {
 
+      res.status(500).json({ erro: 'Erro ao buscar postagens', detalhe: erro.message });
+
+    };
+
+});
+
+router.get('/:id', async (req, res) => {
+
+  const id = req.params.id;
+
+  try {
+
+    const [resultado] = await db.query(`
+      SELECT postagens.id, postagens.caminho_arquivo, postagens.legenda,
+             postagens.tipo_arquivo, postagens.data_postagem, usuarios.nome_usuario
+      FROM postagens, usuarios
+      WHERE postagens.usuario_id = usuarios.id
+        AND postagens.id = ${id}
+    `);
+
+    if (resultado.length === 0) {
+      return res.status(404).json({ erro: 'Postagem não encontrada' });
+    };
+
+    res.json(resultado[0]);
 
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao buscar postagens', detalhe: erro.message });
+    res.status(500).json({ erro: 'Erro ao buscar a postagem', detalhe: erro.message });
   };
 
 });
 
-// Criar uma nova postagem
+
 router.post('/', async (req, res) => {
 
   const usuario_id = req.body.usuario_id;
   const legenda = req.body.legenda;
   const tipo_arquivo = req.body.tipo_arquivo;
 
+  console.log('Dados recebidos para nova postagem:');
+  console.log({ usuario_id, legenda, tipo_arquivo });
+
   if (!req.files || !req.files.arquivo) {
+    console.log('Nenhum arquivo foi enviado.');
     return res.status(400).json({ erro: 'Arquivo não enviado' });
   }
 
@@ -44,22 +73,29 @@ router.post('/', async (req, res) => {
   const nomeArquivo = Date.now() + '-' + arquivo.name;
   const caminho = path.join(__dirname, '..', 'uploads', nomeArquivo);
 
+  console.log(`Salvando arquivo em: ${caminho}`);
+
   arquivo.mv(caminho, async (erroArquivo) => {
 
     if (erroArquivo) {
+      console.log('Erro ao salvar o arquivo:', erroArquivo.message);
       return res.status(500).json({ erro: 'Erro ao salvar o arquivo', detalhe: erroArquivo.message });
     }
 
     try {
 
       const caminhoRelativo = 'uploads/' + nomeArquivo;
-
       const sql = `
         INSERT INTO postagens (usuario_id, caminho_arquivo, legenda, tipo_arquivo)
         VALUES (${usuario_id}, '${caminhoRelativo}', '${legenda}', '${tipo_arquivo}')
       `;
 
+      console.log('Executando SQL de inserção:');
+      console.log(sql);
+
       const [resultado] = await db.query(sql);
+
+      console.log(`Postagem criada com sucesso. ID gerado: ${resultado.insertId}`);
 
       res.status(201).json({
         mensagem: 'Postagem criada com sucesso!',
@@ -68,8 +104,9 @@ router.post('/', async (req, res) => {
       });
 
     } catch (erroSQL) {
+      console.log('Erro ao salvar no banco:', erroSQL.message);
       res.status(500).json({ erro: 'Erro ao salvar no banco', detalhe: erroSQL.message });
-    };
+    }
 
   });
 

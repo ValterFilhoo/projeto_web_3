@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cadastro', component: CadastroComponent },
-  { path: 'postagem', component: PostagemComponent }, 
+  { path: 'postagem/:id', component: PostagemComponent }, 
   { path: 'nova-postagem', component: NovaPostagemComponent }, 
   { path: 'editar-postagem', component: EditarPostagemComponent }
 ];

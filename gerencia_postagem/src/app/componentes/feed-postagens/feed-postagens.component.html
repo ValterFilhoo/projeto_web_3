@@ -5,15 +5,12 @@
     <div *ngFor="let post of postagens" class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
 
       <div class="row d-flex align-items-center mt-3 mb-3">
-
         <div class="col-1 d-flex justify-content-center">
           <i class="fa-solid fa-user fa-2x"></i>
         </div>
-
         <div class="col-1 d-flex justify-content-center">
           <p class="mb-0">{{ post.data_postagem | date:'HH:mm' }}</p>
         </div>
-
       </div>
 
       <div class="row h-25">
@@ -27,16 +24,22 @@
       </div>
 
       <div class="row mt-3 mb-3">
-
         <div class="col-12 d-flex justify-content-between align-items-center gap-3">
           <app-botao-curtida [curtidas]="0"></app-botao-curtida>
           <app-qtd-comentarios [quantidade]="0"></app-qtd-comentarios>
         </div>
-
       </div>
 
       <div class="row">
         <p class="fs-5">{{ post.nome_usuario }}: {{ post.legenda }}</p>
+      </div>
+
+      <div class="row mt-2 mb-3">
+        <div class="col d-flex justify-content-center">
+          <a [routerLink]="['/postagem', post.id]" class="btn btn-outline-primary btn-sm">
+            Ver detalhes
+          </a>
+        </div>
       </div>
 
     </div>

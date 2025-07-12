@@ -1,4 +1,14 @@
 <app-header></app-header>
+
 <app-barra-navegacao></app-barra-navegacao>
-<app-detalhes-postagem></app-detalhes-postagem>
+
+<ng-container *ngIf="postagem">
+  <app-detalhes-postagem
+    [imagem]="postagem.caminho_arquivo"
+    [usuario]="postagem.nome_usuario"
+    [legenda]="postagem.legenda"
+    [comentarios]="[]">
+  </app-detalhes-postagem>
+</ng-container>
+
 <app-footer></app-footer>
