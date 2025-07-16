@@ -4,10 +4,11 @@
 
 <ng-container *ngIf="postagem">
   <app-detalhes-postagem
-    [imagem]="postagem.caminho_arquivo"
-    [usuario]="postagem.nome_usuario"
-    [legenda]="postagem.legenda"
-    [comentarios]="[]">
+  [imagem]="postagem.caminho_arquivo"
+  [usuario]="postagem.nome_usuario"
+  [legenda]="postagem.legenda"
+  [tipo_arquivo]="postagem.tipo_arquivo"
+  [comentarios]="[]">
   </app-detalhes-postagem>
 </ng-container>
 

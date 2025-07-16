@@ -1,4 +1,28 @@
 <app-header></app-header>
+
 <app-barra-navegacao></app-barra-navegacao>
-<app-criar-postagem></app-criar-postagem>
+
+<app-subir-imagem-video
+  [arquivoAtual]="arquivoParaPreview"
+  (arquivo)="receberArquivo($event)">
+</app-subir-imagem-video>
+
+<app-formulario-postagem
+  *ngIf="valoresFormulario"
+  [valoresIniciais]="valoresFormulario"
+  (dadosFormPostagem)="receberDadosFormulario($event)">
+</app-formulario-postagem>
+
+<div class="d-flex justify-content-center mt-3">
+  <button class="btn btn-success mt-3" (click)="atualizarPostagem()">
+    Atualizar Postagem
+  </button>
+</div>
+
+<app-feedback-sucesso-erro
+  *ngIf="mostrarToast"
+  [tipo]="sucesso ? 'sucesso' : 'erro'"
+  [mensagem]="mensagemFeedback">
+</app-feedback-sucesso-erro>
+
 <app-footer></app-footer>

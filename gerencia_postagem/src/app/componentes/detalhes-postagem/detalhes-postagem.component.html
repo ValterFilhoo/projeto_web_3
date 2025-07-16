@@ -10,8 +10,27 @@
 
           <div class="col text-center">
 
-            <img [src]="'http://localhost:3000/' + imagem"
-            class="img-fluid rounded w-100 object-fit-cover" style="max-height: 450px;">
+            <ng-container [ngSwitch]="tipo_arquivo">
+              
+              <img
+                *ngSwitchCase="'imagem'"
+                [src]="'http://localhost:3000/' + imagem"
+                alt="Imagem da postagem"
+                class="img-fluid rounded w-100 object-fit-cover"
+                style="max-height: 450px;"
+              />
+
+              <video
+                *ngSwitchCase="'video'"
+                [src]="'http://localhost:3000/' + imagem"
+                controls
+                class="w-100 rounded"
+                style="height: 450px; object-fit: cover;"
+              ></video>
+
+              <p *ngSwitchDefault class="text-muted text-center">Mídia não suportada</p>
+            </ng-container>
+
           </div>
 
         </div>

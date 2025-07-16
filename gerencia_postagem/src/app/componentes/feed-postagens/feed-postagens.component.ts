@@ -25,9 +25,11 @@ export class FeedPostagensComponent implements OnInit {
   private async carregarPostagens(): Promise<void> {
 
     try {
+
       const resposta = await this.postagemServicos.getPostagens();
       this.postagens = resposta;
       console.log('Resultado da requisição:', resposta);
+      
     } catch (erro) {
       console.error('Erro na requisição:', erro);
     };

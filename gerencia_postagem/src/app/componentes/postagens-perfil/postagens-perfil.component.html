@@ -9,18 +9,38 @@
         <a [routerLink]="'/postagem/' + post.id" class="text-decoration-none text-dark">
 
           <div class="d-flex flex-column justify-content-center">
-            <img [src]="post.imagem" alt="Imagem da postagem" class="img-fluid w-100 mb-3">
+            
+            <ng-container [ngSwitch]="post.tipo_arquivo">
+
+              <img
+                *ngSwitchCase="'imagem'"
+                [src]="'http://localhost:3000/' + post.caminho_arquivo"
+                alt="Imagem da postagem"
+                class="img-fluid rounded"
+              />
+
+              <video
+                *ngSwitchCase="'video'"
+                [src]="'http://localhost:3000/' + post.caminho_arquivo"
+                controls
+                class="w-100 h-100 rounded"
+              ></video>
+
+              <p *ngSwitchDefault class="text-muted">Tipo de mídia não suportado</p>
+              
+            </ng-container>
+
           </div>
           
         </a>
 
         <div class="mt-4 d-flex justify-content-center gap-3">
 
-          <button class="btn btn-outline-primary btn-sm">
+          <button class="btn btn-outline-primary btn-sm" [routerLink]="['/editar-postagem', post.id]">
             <i class="fas fa-edit"></i> Editar
           </button>
 
-          <button class="btn btn-outline-danger btn-sm">
+          <button class="btn btn-outline-danger btn-sm" (click)="excluirPostagem(post.id)">
             <i class="fas fa-trash-alt"></i> Excluir
           </button>
 

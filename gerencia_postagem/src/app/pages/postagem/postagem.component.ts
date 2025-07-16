@@ -32,8 +32,11 @@ export class PostagemComponent implements OnInit {
 
       const resultado = await this.postagemService.getPostagemPorId(id);
       this.postagem = resultado;
+
     } catch (erro) {
-      console.error('Erro ao buscar postagem:', erro);
+
+      console.log('Erro ao buscar postagem:', erro);
+      
     };
 
   };

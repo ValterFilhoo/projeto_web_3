@@ -1,33 +1,64 @@
 <section class="container mt-5">
-
   <div class="row justify-content-center">
-
     <div class="col-md-8 col-lg-6">
-
       <div class="border rounded p-4 text-center shadow-sm">
 
-        <h3 class="mb-3">Midia da Postagem</h3>
+        <h3 class="mb-3">Mídia da Postagem</h3>
 
-        <input type="file" class="form-control mb-3" (change)="processarArquivo($event)" accept="image/*,video/*">
+        <!-- Campo de seleção sempre visível -->
+        <input
+          type="file"
+          class="form-control mb-3"
+          (change)="processarArquivo($event)"
+          accept="image/*,video/*"
+        />
 
+        <!-- Se uma nova mídia foi selecionada -->
         <div *ngIf="arquivoSelecionado" class="mt-4">
 
-          <ng-container *ngIf=" previewUrl && isImagem; else videoPreview">
-            <img [src]="previewUrl" class="img-fluid rounded">
+          <ng-container *ngIf="previewUrl && isImagem; else videoPreview">
+            <img [src]="previewUrl" class="img-fluid rounded" />
           </ng-container>
 
           <ng-template #videoPreview>
             <video *ngIf="previewUrl && !isImagem" controls class="w-100 rounded">
-              <source [src]="previewUrl" type="video/mp4">
+              <source [src]="previewUrl" type="video/mp4" />
             </video>
           </ng-template>
-          
+
+          <button class="btn btn-danger mt-3" (click)="removerArquivo()">
+            Remover arquivo
+          </button>
         </div>
-        
+
+        <!-- Se nenhuma nova mídia foi selecionada, mostrar a original -->
+        <div *ngIf="!arquivoSelecionado && arquivoAtual" class="mt-4">
+
+          <ng-container *ngIf="
+            arquivoAtual.endsWith('.jpg') ||
+            arquivoAtual.endsWith('.jpeg') ||
+            arquivoAtual.endsWith('.png') ||
+            arquivoAtual.endsWith('.webp')
+            ; else videoOriginal">
+
+            <img [src]="'http://localhost:3000/' + arquivoAtual" class="img-fluid rounded" />
+          </ng-container>
+
+          <ng-template #videoOriginal>
+            <video
+              *ngIf="
+                arquivoAtual.endsWith('.mp4') ||
+                arquivoAtual.endsWith('.mov') ||
+                arquivoAtual.endsWith('.webm')
+              "
+              controls class="w-100 rounded">
+              <source [src]="'http://localhost:3000/' + arquivoAtual" type="video/mp4" />
+            </video>
+          </ng-template>
+
+        </div>
+
       </div>
-
     </div>
-
   </div>
-  
 </section>

@@ -5,29 +5,51 @@
     <div *ngFor="let post of postagens" class="container-fluid d-flex flex-column heightContainer bgCard mb-5">
 
       <div class="row d-flex align-items-center mt-3 mb-3">
+
         <div class="col-1 d-flex justify-content-center">
           <i class="fa-solid fa-user fa-2x"></i>
         </div>
-        <div class="col-1 d-flex justify-content-center">
-          <p class="mb-0">{{ post.data_postagem | date:'HH:mm' }}</p>
+
+        <div class="col-2 d-flex justify-content-center">
+          <p class="mb-0">{{ post.data_postagem | date:'dd/MM/yyyy HH:mm' }}</p>
         </div>
+
       </div>
 
       <div class="row h-25">
+
         <div class="container-fluid col-12 maxHeightContainerImg w-100">
-          <img 
-            class="img-fluid h-100 w-100 object-fit-fill"
-            [src]="'http://localhost:3000/' + post.caminho_arquivo"
-            [alt]="'Imagem de ' + post.nome_usuario"
-          />
+          
+          <ng-container [ngSwitch]="post.tipo_arquivo">
+            
+            <img
+              *ngSwitchCase="'imagem'"
+              class="img-fluid h-100 w-100 object-fit-fill"
+              [src]="'http://localhost:3000/' + post.caminho_arquivo"
+              [alt]="'Imagem de ' + post.nome_usuario"
+            />
+
+            <video
+              *ngSwitchCase="'video'"
+              class="w-100 h-100"
+              [src]="'http://localhost:3000/' + post.caminho_arquivo"
+              controls
+            ></video>
+
+            <p *ngSwitchDefault class="text-danger">Tipo de arquivo não suportado</p>
+          </ng-container>
+
         </div>
+
       </div>
 
       <div class="row mt-3 mb-3">
+
         <div class="col-12 d-flex justify-content-between align-items-center gap-3">
           <app-botao-curtida [curtidas]="0"></app-botao-curtida>
           <app-qtd-comentarios [quantidade]="0"></app-qtd-comentarios>
         </div>
+
       </div>
 
       <div class="row">
@@ -35,11 +57,13 @@
       </div>
 
       <div class="row mt-2 mb-3">
+
         <div class="col d-flex justify-content-center">
           <a [routerLink]="['/postagem', post.id]" class="btn btn-outline-primary btn-sm">
             Ver detalhes
           </a>
         </div>
+
       </div>
 
     </div>

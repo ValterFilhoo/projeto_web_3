@@ -12,4 +12,4 @@ export class FeedbackSucessoErroComponent {
   @Input() tipo: 'sucesso' | 'erro' = 'sucesso';
   @Input() mensagem: string = '';
 
-}
+};

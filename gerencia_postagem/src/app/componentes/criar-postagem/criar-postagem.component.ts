@@ -8,13 +8,7 @@ import { NovaPostagem } from '../../interfaces/postagem.interface';
 
 @Component({
   selector: 'app-criar-postagem',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SubirImagemVideoComponent,
-    FormularioPostagemComponent,
-    FeedbackSucessoErroComponent
-  ],
+  imports: [ CommonModule, SubirImagemVideoComponent, FormularioPostagemComponent, FeedbackSucessoErroComponent],
   templateUrl: './criar-postagem.component.html',
   styleUrls: ['./criar-postagem.component.css']
 })
@@ -35,28 +29,31 @@ export class CriarPostagemComponent {
 
   constructor(private postagemService: PostagemService) {}
 
-  getDados(dados: { id: number; legenda: string }): void {
-    this.postagem = dados;
+  getDados(dados: { idUsuario: string | number | null; legendaPostagem: string }): void {
+    
+    this.postagem.id = Number(dados.idUsuario);
+    this.postagem.legenda = dados.legendaPostagem;
 
     if (!this.postagem.id || !this.postagem.legenda.trim() || !this.arquivo) {
       this.sucesso = false;
       this.mensagemFeedback = 'Erro: todos os campos são obrigatórios.';
       this.reiniciarToast();
       return;
-    }
+    };
 
     this.enviarPostagem();
-  }
+
+  };
 
   getArquivo(arquivo: File): void {
     this.arquivo = arquivo;
     console.log('Arquivo recebido no pai:', this.arquivo);
-  }
+  };
 
   publicarPostagem(): void {
     console.log('Clique detectado. formulário:', this.formularioComp);
     this.formularioComp.enviarFormulario();
-  }
+  };
 
   private async enviarPostagem(): Promise<void> {
 
@@ -73,7 +70,8 @@ export class CriarPostagemComponent {
 
       await this.postagemService.createPostagem(dadosPostagem);
       this.sucesso = true;
-      this.mensagemFeedback = 'Postagem enviada com sucesso!';
+      this.mensagemFeedback = 'Postagem cadastrada com sucesso!';
+
     } catch (erro) {
       console.error('Erro ao criar postagem:', erro);
       this.sucesso = false;
@@ -81,7 +79,8 @@ export class CriarPostagemComponent {
     }
 
     this.reiniciarToast();
-  }
+
+  };
 
   private reiniciarToast(): void {
     this.mostrarToast = false;

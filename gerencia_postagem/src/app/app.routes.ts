@@ -9,10 +9,10 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 
 export const routes: Routes = [
   { path: '', component: FeedComponent },
-  { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil/:id', component: PerfilComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cadastro', component: CadastroComponent },
   { path: 'postagem/:id', component: PostagemComponent }, 
   { path: 'nova-postagem', component: NovaPostagemComponent }, 
-  { path: 'editar-postagem', component: EditarPostagemComponent }
+  { path: 'editar-postagem/:id', component: EditarPostagemComponent }
 ];
