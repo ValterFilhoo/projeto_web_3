@@ -22,7 +22,7 @@ router.get('/:id', async (req, res) => {
     const usuario = usuarioResultado[0];
 
     const [postagens] = await db.query(
-      `SELECT id, caminho_arquivo, legenda FROM postagens WHERE usuario_id = ${idUsuario}  ORDER BY data_postagem DESC`
+      `SELECT id, caminho_arquivo, legenda, tipo_arquivo FROM postagens WHERE usuario_id = ${idUsuario} ORDER BY data_postagem DESC`
     );
 
     res.json({

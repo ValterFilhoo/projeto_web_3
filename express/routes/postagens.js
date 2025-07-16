@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
   try {
 
     const [resultado] = await db.query(`
-      SELECT postagens.id, postagens.caminho_arquivo, postagens.legenda,
+      SELECT postagens.id, postagens.usuario_id, postagens.caminho_arquivo, postagens.legenda,
              postagens.tipo_arquivo, postagens.data_postagem, usuarios.nome_usuario
       FROM postagens, usuarios
       WHERE postagens.usuario_id = usuarios.id
@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
   if (!req.files || !req.files.arquivo) {
     console.log('Nenhum arquivo foi enviado.');
     return res.status(400).json({ erro: 'Arquivo não enviado' });
-  }
+  };
 
   const arquivo = req.files.arquivo;
   const nomeArquivo = Date.now() + '-' + arquivo.name;
@@ -78,9 +78,11 @@ router.post('/', async (req, res) => {
   arquivo.mv(caminho, async (erroArquivo) => {
 
     if (erroArquivo) {
+
       console.log('Erro ao salvar o arquivo:', erroArquivo.message);
       return res.status(500).json({ erro: 'Erro ao salvar o arquivo', detalhe: erroArquivo.message });
-    }
+
+    };
 
     try {
 
@@ -104,9 +106,11 @@ router.post('/', async (req, res) => {
       });
 
     } catch (erroSQL) {
+
       console.log('Erro ao salvar no banco:', erroSQL.message);
       res.status(500).json({ erro: 'Erro ao salvar no banco', detalhe: erroSQL.message });
-    }
+
+    };
 
   });
 
@@ -116,21 +120,50 @@ router.put('/:id', async (req, res) => {
 
   const id = req.params.id;
   const { legenda, tipo_arquivo } = req.body;
+  let caminho_arquivo;
+
 
   try {
 
-    const [resultado] = await db.query(
-      `UPDATE postagens SET legenda = '${legenda}', tipo_arquivo = '${tipo_arquivo}' WHERE id = ${id}`
-    );
+    if (req.files && req.files.arquivo) {
+
+      const arquivo = req.files.arquivo;
+      const nomeArquivo = Date.now() + '-' + arquivo.name;
+      const destino = path.join(__dirname, '..', 'uploads', nomeArquivo);
+
+      await arquivo.mv(destino);
+      caminho_arquivo = 'uploads/' + nomeArquivo;
+      console.log('Novo arquivo salvo em:', caminho_arquivo);
+
+    } else if ( typeof req.body.caminho_arquivo === 'string' && req.body.caminho_arquivo.trim() !== '' && req.body.caminho_arquivo !== 'undefined') {
+
+      caminho_arquivo = req.body.caminho_arquivo;
+      console.log('Usando caminho existente:', caminho_arquivo);
+
+    };
+
+    const [resultado] = await db.query(`
+      UPDATE postagens
+      SET legenda = '${legenda}',
+          tipo_arquivo = '${tipo_arquivo}',
+          caminho_arquivo = '${caminho_arquivo}'
+      WHERE id = ${id}
+    `);
 
     if (resultado.affectedRows === 0) {
       return res.status(404).json({ erro: 'Postagem não encontrada' });
     };
 
-    res.json({ mensagem: 'Postagem atualizada com sucesso' });
+    res.json({ mensagem: 'Postagem atualizada com sucesso', caminho_arquivo });
 
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao atualizar a postagem', detalhe: erro.message });
+
+    console.log('Erro ao atualizar a postagem:', erro.message);
+    res.status(500).json({
+      erro: 'Erro ao atualizar a postagem',
+      detalhe: erro.message
+    });
+
   };
 
 });
